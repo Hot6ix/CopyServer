@@ -39,7 +39,7 @@ public class ReceiverThread extends Thread {
 		
 		if(mListener != null) mListener.setOnThreadStart(mSocket.getRemoteSocketAddress().toString());
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(mSocket.getInputStream()));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(mSocket.getInputStream(), "UTF-8"));
 			String msg;
 			while((msg = reader.readLine()) != null) {
 				System.out.println(String.format("Message from %s : %s", mSocket.getRemoteSocketAddress().toString(), msg));
@@ -61,14 +61,14 @@ public class ReceiverThread extends Thread {
 				else {
 					if(Boolean.valueOf(prop.getProperty("allowCharacter"))) {
 						mClipper.setContents(new StringSelection(msg), null);
-						Notificator.getInstance().printNotification("Ctrl + V to paste!", String.format("%s is copied to clipboard", msg), MessageType.INFO);
+						Notificator.getInstance().printNotification("메세지 복사됨", String.format("Ctrl + V를 눌러 붙여넣기 : %s", msg), MessageType.INFO);
 					}
 					else {
 						Pattern pattern = Pattern.compile("\\d+");
 						Matcher matcher = pattern.matcher(msg);
 						if(matcher.matches()) {
 							mClipper.setContents(new StringSelection(msg), null);
-							Notificator.getInstance().printNotification("Ctrl + V to paste!", String.format("%s is copied to clipboard", msg), MessageType.INFO);
+							Notificator.getInstance().printNotification("메세지 복사됨", String.format("Ctrl + V를 눌러 붙여넣기 : %s", msg), MessageType.INFO);
 						}
 						else {
 							System.out.println(String.format("Message must not include character : %s", msg));

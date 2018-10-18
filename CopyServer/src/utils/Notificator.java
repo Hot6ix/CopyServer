@@ -22,8 +22,10 @@ public class Notificator {
 	private Notificator() {
 		mTray = SystemTray.getSystemTray();
 		mPopup = new PopupMenu();
-		mIcon = new TrayIcon(Toolkit.getDefaultToolkit().createImage("data/bmo.jpg"));
-
+		
+		mIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage("C:\\Users\\james\\git\\repository\\CopyServer\\bin\\data\\bmo.png"));
+		mIcon.setImageAutoSize(true);
+		
 		mUrl = new MenuItem("정보");
 		mUrl.setActionCommand(ButtonId.BTN_INFO.getId());
 		mSetting = new MenuItem("설정 파일 열기");
@@ -44,7 +46,6 @@ public class Notificator {
 		try {
 			mTray.add(mIcon);
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

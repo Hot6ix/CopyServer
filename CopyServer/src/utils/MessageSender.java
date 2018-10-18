@@ -1,5 +1,6 @@
 package utils;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -31,7 +32,7 @@ public class MessageSender {
 
 	public void sendMessage(Message msg) {
 		try {
-			PrintWriter writer = new PrintWriter(mSocket.getOutputStream());
+			PrintWriter writer = new PrintWriter(new OutputStreamWriter(mSocket.getOutputStream(), "UTF-8"));
 			writer.println(msg);
 			writer.flush();
 		} catch (IOException e) {
