@@ -141,7 +141,7 @@ public class Server implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals(ButtonId.BTN_INFO.getId())) {
 			try {
-				Desktop.getDesktop().browse(new URI("http://www.noob.co.kr"));
+				Desktop.getDesktop().browse(new URI("https://github.com/Hot6ix/CopyServer"));
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			} catch (URISyntaxException e1) {
