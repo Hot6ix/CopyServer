@@ -45,21 +45,18 @@ public class Server implements ActionListener {
 	
 	public void start()	{
 		try {
-			mServer = new ServerSocket(PORT);
+			int port = PORT;
+			try {
+				port = Integer.valueOf(mProp.getProperty("port"));
+			} catch (NumberFormatException e) {
+				System.out.println(String.format("Unavailable to get port. Use default port : %s", port));
+			}
+			
+			mServer = new ServerSocket(port);
 			System.out.println("Initiate socket server...");
 			System.out.println("=========================");
 			mProp.list(System.out);
 			System.out.println("=========================");
-//			printConnection();
-//			new Thread(() -> {
-//				try {
-//					Thread.sleep(60000);
-//					finish();
-//				} catch (InterruptedException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}).start();
 			
 			// Only a connection allowed
 			while(true) {

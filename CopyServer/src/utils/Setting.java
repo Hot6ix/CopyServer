@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.Properties;
 
+import main.Server;
+
 public class Setting {
 	
 	private final String explain = "password : 빈칸 시 인증 없이 연결\nallowCharacter : 숫자 외 문자 허용 여부";
@@ -40,8 +42,7 @@ public class Setting {
 			
 			return prop;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Unavailable to get setting. Create new one.");
 			return createSetting();
 		}
 	}
@@ -49,6 +50,7 @@ public class Setting {
 	private Properties createSetting() {
 		try {
 			Properties prop = new Properties();
+			prop.setProperty("port", String.valueOf(Server.PORT));
 			prop.setProperty("password", "");
 			prop.setProperty("allowCharacter", "false");
 			prop.store(new OutputStreamWriter(
