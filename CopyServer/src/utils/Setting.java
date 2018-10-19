@@ -12,7 +12,6 @@ import main.Server;
 
 public class Setting {
 	
-	private final String explain = "password : 빈칸 시 인증 없이 연결\nallowCharacter : 숫자 외 문자 허용 여부";
 	private Properties prop;
 	
 	private Setting() {
@@ -55,14 +54,12 @@ public class Setting {
 			prop.setProperty("allowCharacter", "false");
 			prop.store(new OutputStreamWriter(
 				    new FileOutputStream("setting.ini"), "UTF-8"), 
-				    explain);
+				    null);
 			
 			return prop;
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

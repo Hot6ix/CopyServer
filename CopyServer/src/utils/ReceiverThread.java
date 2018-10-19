@@ -45,6 +45,7 @@ public class ReceiverThread extends Thread {
 				System.out.println(String.format("Message from %s : %s", mSocket.getRemoteSocketAddress().toString(), msg));
 
 				if(Server.isPasswordMode) {
+					// Read next message to verify password
 					if(msg.equals(prop.getProperty("password"))) {
 						Server.isPasswordMode = false;
 						mSender.setmSocket(mSocket);
@@ -59,7 +60,8 @@ public class ReceiverThread extends Thread {
 					}
 				}
 				else {
-					if(Boolean.valueOf(prop.getProperty("allowCharacter"))) {
+					boolean allowCharacter = Boolean.valueOf(prop.getProperty("allowCharacter"));
+					if(allowCharacter) {
 						mClipper.setContents(new StringSelection(msg), null);
 						Notificator.getInstance().printNotification("메세지 복사됨", String.format("Ctrl + V를 눌러 붙여넣기 : %s", msg), MessageType.INFO);
 					}
@@ -77,7 +79,6 @@ public class ReceiverThread extends Thread {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

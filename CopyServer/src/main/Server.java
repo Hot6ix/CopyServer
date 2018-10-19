@@ -63,26 +63,32 @@ public class Server implements ActionListener {
 				Socket mSocket = mServer.accept();
 				
 				if(mConnected != null) {
+					// Reject other connections
 					mNotifier.printNotification("Connection refused!", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					
+					// Send end of connection
 					mSender.setmSocket(mSocket);
 					mSender.sendMessage(Message.EOC);
 					
 					mSocket.close();
 				}
 				else {
+					// Allow first connection
 					mConnected = mSocket;
 					mNotifier.printNotification("New device connected!", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					
+					// Send connected
 					mSender.setmSocket(mConnected);
 					mSender.sendMessage(Message.CONNECTED);
 
+					// Request password if set or not
 					String password = mProp.getProperty("password");
 					if(password != null && !password.isEmpty()) {
 						mSender.sendMessage(Message.RQ_PW);
 						isPasswordMode = true;
 					}
 					
+					// Ready to get message
 					mReceiver = new ReceiverThread(mConnected);
 					mReceiver.setListener(new ThreadListener() {
 						
@@ -105,6 +111,7 @@ public class Server implements ActionListener {
 		}
 	}
 	
+	// Close server
 	public void finish() {
 		try {
 			if(mConnected != null) {
@@ -117,6 +124,7 @@ public class Server implements ActionListener {
 		}
 	}
 	
+	// Print connected every 30 sec
 	private void printConnection() {
 		new Thread(() -> {
 			while(true) {
@@ -134,6 +142,7 @@ public class Server implements ActionListener {
 		}).start();
 	}
 
+	// Event handler for sysetm tray
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if(e.getActionCommand().equals(ButtonId.BTN_INFO.getId())) {

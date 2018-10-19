@@ -1,5 +1,6 @@
 package data;
 
+// System tray button ids
 public enum ButtonId {
 	BTN_EXIT("BTN_EXIT"),
 	BTN_KICK("BTN_KICK"),
