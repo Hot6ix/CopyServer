@@ -13,7 +13,7 @@ public class TestClient {
 	public static void main(String[] args) {
 
 		try {
-			mSocket = new Socket("localhost", Server.PORT);
+			mSocket = new Socket("192.168.1.23", Server.PORT);
 			
 			SenderThread st = new SenderThread(mSocket);
 			st.setListener(new ThreadListener() {
