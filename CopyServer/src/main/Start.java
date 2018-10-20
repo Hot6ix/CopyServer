@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Desktop;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -23,10 +24,11 @@ public class Start {
 		
 		private Server mServer;
 		private Setting mSetting = Setting.getInstance();
+		private Notificator mNotifier;
 		
 		public ServerHandler() {
 			// Handle popup 
-			Notificator mNotifier = Notificator.getInstance();
+			mNotifier = Notificator.getInstance();
 			mNotifier.getmUrl().addActionListener(this);
 			mNotifier.getmExit().addActionListener(this);
 			mNotifier.getmRestart().addActionListener(this);
