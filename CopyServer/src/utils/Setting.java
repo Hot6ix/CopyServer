@@ -13,9 +13,10 @@ import main.Server;
 public class Setting {
 	
 	private Properties prop;
+	private static final String RELATIVE_URL = "./setting.ini";
 	
 	private Setting() {
-		prop = loadSetting("./setting.ini");
+		prop = loadSetting(RELATIVE_URL);
 	}
 	
 	private static class Singleton {
@@ -32,6 +33,11 @@ public class Setting {
 
 	public void setProp(Properties prop) {
 		this.prop = prop;
+	}
+	
+	public Properties reloadProp() {
+		prop = loadSetting(RELATIVE_URL);
+		return prop;
 	}
 
 	private Properties loadSetting(String path) {

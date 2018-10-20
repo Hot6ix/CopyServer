@@ -6,6 +6,8 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import data.ButtonId;
 
@@ -23,8 +25,8 @@ public class Notificator {
 	private Notificator() {
 		mTray = SystemTray.getSystemTray();
 		mPopup = new PopupMenu();
-		
-		mIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage("C:\\Users\\james\\git\\repository\\CopyServer\\bin\\data\\bmo.png"));
+
+		mIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage("resources/bmo.png"));
 		mIcon.setImageAutoSize(true);
 		
 		mUrl = new MenuItem("정보");

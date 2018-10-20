@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 
 import data.ButtonId;
 import utils.Notificator;
+import utils.Setting;
 
 public class Start {
 
@@ -21,6 +22,7 @@ public class Start {
 	static class ServerHandler implements ActionListener {
 		
 		private Server mServer;
+		private Setting mSetting = Setting.getInstance();
 		
 		public ServerHandler() {
 			// Handle popup 
@@ -61,6 +63,7 @@ public class Start {
 				// Restart server
 				System.out.println("Restarting server...");
 				mServer.finish();
+				mSetting.reloadProp();
 				mServer = new Server();
 				mServer.start();
 			}
