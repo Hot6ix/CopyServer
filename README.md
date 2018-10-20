@@ -1,6 +1,21 @@
 # CopyServer
 A copy server which allows only a single connection based on socket
 
+스마트폰 -> PC 인증번호 전송용 서버
+
+- 사용 방법
+  - 프로그램 실행 시 시스템 트레이에서 아이콘을 확인할 수 있습니다.
+  - 전용 앱을 통해 연결합니다.
+  - 스마트폰에서 인증번호 SMS 수신 시 인증번호가 자동으로 복사됩니다.
+  
+- setting.ini 수정 방법
+    - password는 앱에서 서버 연결 시 필요한 비밀번호로 기본적으로 빈칸으로 되어 비밀번호를 요구하지 않습니다.
+    - port는 프로그램과 앱이 기본 포트 31331을 사용합니다. 특별한 경우를 제외하고 바꾸지 않을 것을 권장합니다.
+    - allowCharacter는 숫자를 제외한 문자(특수문자 포함)를 복사할 지 결정하는 칸입니다. 기본적으로 false로 문자도 허용 가능하게 할 경우 true로 변경하면 됩니다.
+  
+- 주의 사항
+  - 첫 실행 시 같은 폴더 내 setting.ini를 생성합니다.
+
 Package explorer
 - client
   - Sample client class for test server  
@@ -16,12 +31,13 @@ Package explorer
 3. Type string in TestClient to send message
 4. Server will receive message but if message contains character, server won't copy to clipboard (You can change the setting in ini file)
 5. If you didn't change setting and send only numbers to server, server will copy to clipboard
-6. Ctrl + V to paste
+6. You can now paste!!
 
 * Server will disconnect all other connections except first connection.  
 * You can check system tray to see several options
   - 정보 (See information)
   - 설정 파일 열기 (Open setting.ini)
+  - 서버 재시작 (Restart server)
   - 연결 끊기 (Disconnect connected)
   - 종료 (Finish)
 * This project used to use for copy numbers to auth.
