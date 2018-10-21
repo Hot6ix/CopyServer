@@ -6,8 +6,6 @@ import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 import data.ButtonId;
 

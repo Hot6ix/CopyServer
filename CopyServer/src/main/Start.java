@@ -1,7 +1,6 @@
 package main;
 
 import java.awt.Desktop;
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
