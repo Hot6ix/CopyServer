@@ -64,7 +64,7 @@ public class Server extends Thread {
 						isPasswordMode = true;
 					}
 					else {
-						mNotifier.printNotification("New device connected!", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
+						mNotifier.printNotification("Connected", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					}
 					
 					mReceiver = new ReceiverThread(mConnected);
@@ -78,6 +78,7 @@ public class Server extends Thread {
 						@Override
 						public void setOnThreadClosed(String ip) {
 							mConnected = null;
+							mNotifier.printNotification("Disconnected", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 							System.out.println(String.format("Receiver thread finished : %s", ip));
 						}
 					});

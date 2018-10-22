@@ -53,7 +53,7 @@ public class ReceiverThread extends Thread {
 						mSender.setmSocket(mSocket);
 						mSender.sendMessage(Message.ACK);
 						System.out.println("Authentication success!");
-						mNotifier.printNotification("New device connected!", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
+						mNotifier.printNotification("Connected", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					}
 					else {
 						mSender.setmSocket(mSocket);
