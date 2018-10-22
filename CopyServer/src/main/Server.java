@@ -54,7 +54,6 @@ public class Server extends Thread {
 				}
 				else {
 					mConnected = mSocket;
-					mNotifier.printNotification("New device connected!", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					
 					mSender.setmSocket(mConnected);
 					mSender.sendMessage(Message.CONNECTED);
@@ -63,6 +62,9 @@ public class Server extends Thread {
 					if(password != null && !password.isEmpty()) {
 						mSender.sendMessage(Message.RQ_PW);
 						isPasswordMode = true;
+					}
+					else {
+						mNotifier.printNotification("New device connected!", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					}
 					
 					mReceiver = new ReceiverThread(mConnected);

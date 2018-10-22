@@ -1,5 +1,6 @@
 package utils;
 import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -21,6 +22,7 @@ public class ReceiverThread extends Thread {
 	private Clipboard mClipper;
 	private Properties prop;
 	private MessageSender mSender;
+	private Notificator mNotifier = Notificator.getInstance();
 
 	public ReceiverThread(Socket socket) {
 		this.mSocket = socket;
@@ -51,6 +53,7 @@ public class ReceiverThread extends Thread {
 						mSender.setmSocket(mSocket);
 						mSender.sendMessage(Message.ACK);
 						System.out.println("Authentication success!");
+						mNotifier.printNotification("New device connected!", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					}
 					else {
 						mSender.setmSocket(mSocket);
