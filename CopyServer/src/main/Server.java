@@ -1,6 +1,7 @@
 package main;
 import java.awt.TrayIcon;
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Properties;
@@ -40,7 +41,6 @@ public class Server extends Thread {
 			mProp.list(System.out);
 			System.out.println("=========================");
 			
-			printConnection();
 			// Only a connection allowed
 			while(true) {
 				Socket mSocket = mServer.accept();
