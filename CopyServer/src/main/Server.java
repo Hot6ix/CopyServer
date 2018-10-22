@@ -40,12 +40,13 @@ public class Server extends Thread {
 			mProp.list(System.out);
 			System.out.println("=========================");
 			
+			printConnection();
 			// Only a connection allowed
 			while(true) {
 				Socket mSocket = mServer.accept();
 				
 				if(mConnected != null) {
-					mNotifier.printNotification("Connection refused!", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
+					mNotifier.printNotification("연결 거부", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					
 					mSender.setmSocket(mSocket);
 					mSender.sendMessage(Message.EOC);
@@ -64,7 +65,7 @@ public class Server extends Thread {
 						isPasswordMode = true;
 					}
 					else {
-						mNotifier.printNotification("Connected", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
+						mNotifier.printNotification("연결됨", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					}
 					
 					mReceiver = new ReceiverThread(mConnected);
@@ -72,14 +73,20 @@ public class Server extends Thread {
 						
 						@Override
 						public void setOnThreadStart(String ip) {
-							System.out.println(String.format("Receiver thread started : %s", ip));
+							
 						}
 						
 						@Override
 						public void setOnThreadClosed(String ip) {
-							mConnected = null;
-							mNotifier.printNotification("Disconnected", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
-							System.out.println(String.format("Receiver thread finished : %s", ip));
+							if(mConnected != null && mConnected.isConnected()) {
+								try {
+									mSender.sendMessage(Message.EOC);
+									mConnected.close();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+								mConnected = null;
+							}
 						}
 					});
 					mReceiver.start();
@@ -94,7 +101,8 @@ public class Server extends Thread {
 	
 	public void finish() {
 		try {
-			if(mConnected != null) {
+			if(mConnected != null && mConnected.isConnected()) {
+				mSender.sendMessage(Message.EOC);
 				mConnected.close();
 			}
 			
@@ -105,13 +113,16 @@ public class Server extends Thread {
 	}
 	
 	public void kick() {
-		if(mConnected != null) {
+		if(mConnected != null && mConnected.isConnected()) {
 			System.out.println("Disconnecting...");
+			mNotifier.printNotification("연결 종료", mConnected.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 			try {
+				mSender.sendMessage(Message.EOC);
 				mConnected.close();
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+			mConnected = null;
 		}
 		else {
 			System.out.println("Nothing connected.");
@@ -123,10 +134,10 @@ public class Server extends Thread {
 			while(true) {
 				try {
 					if(mConnected != null) {
-						System.out.println(String.format("%s is connected : %b", mConnected.getRemoteSocketAddress().toString(), !mConnected.isClosed()));
+						System.out.println(String.format("%s is connected : %b", mConnected.getRemoteSocketAddress().toString(), mConnected.isConnected()));
 						mSender.sendMessage(Message.CONNECTED);
 					}
-					Thread.sleep(30000);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

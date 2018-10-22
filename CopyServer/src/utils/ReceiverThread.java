@@ -13,6 +13,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import data.Message;
+import data.RejecetedException;
 import main.Server;
 
 public class ReceiverThread extends Thread {
@@ -53,27 +54,27 @@ public class ReceiverThread extends Thread {
 						mSender.setmSocket(mSocket);
 						mSender.sendMessage(Message.ACK);
 						System.out.println("Authentication success!");
-						mNotifier.printNotification("Connected", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
+						mNotifier.printNotification("연결됨", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					}
 					else {
 						mSender.setmSocket(mSocket);
 						mSender.sendMessage(Message.REJ);
 						System.out.println("Authentication failed!");
-						break;
+						throw new RejecetedException();
 					}
 				}
 				else {
 					boolean allowCharacter = Boolean.valueOf(prop.getProperty("allowCharacter"));
 					if(allowCharacter) {
 						mClipper.setContents(new StringSelection(msg), null);
-						Notificator.getInstance().printNotification("메세지 복사됨", String.format("Ctrl + V를 눌러 붙여넣기 : %s", msg), MessageType.INFO);
+						Notificator.getInstance().printNotification("클립보드에 복사되었습니다.", String.format("인증번호 : %s", msg), MessageType.INFO);
 					}
 					else {
 						Pattern pattern = Pattern.compile("\\d+");
 						Matcher matcher = pattern.matcher(msg);
 						if(matcher.matches()) {
 							mClipper.setContents(new StringSelection(msg), null);
-							Notificator.getInstance().printNotification("메세지 복사됨", String.format("Ctrl + V를 눌러 붙여넣기 : %s", msg), MessageType.INFO);
+							Notificator.getInstance().printNotification("클립보드에 복사되었습니다.", String.format("인증번호 : %s", msg), MessageType.INFO);
 						}
 						else {
 							System.out.println(String.format("Message must not include character : %s", msg));
@@ -81,7 +82,11 @@ public class ReceiverThread extends Thread {
 					}
 				}
 			}
+			
+			mNotifier.printNotification("연결 종료", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (RejecetedException e) {
 			e.printStackTrace();
 		}
 		
