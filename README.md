@@ -1,7 +1,9 @@
 # CopyServer
-A copy server which allows only a single connection based on socket
 
 스마트폰 -> PC 인증번호 전송용 서버
+
+이 프로그램은 별도로 개발된 안드로이드 앱과 함께 사용해야 합니다.  
+앱 다운로드 : https://github.com/Hot6ix/CopyClient
 
 - 사용 방법
   - 프로그램 실행 시 시스템 트레이에서 아이콘을 확인할 수 있습니다.
@@ -15,3 +17,6 @@ A copy server which allows only a single connection based on socket
   
 - 주의 사항
   - 첫 실행 시 같은 폴더 내 setting.ini를 생성합니다.
+  - 공공에서 제공하는 네트워크 접속 후 사용하는 것을 권장하지 않습니다.
+  - 추가 설정 시 외부에서도 접속은 가능하지만 인증번호는 노출 시 위험한 정보이므로 같은 네트워크 안에서만 사용하는 것을 권장합니다.
+  - 개발자는 위 주의 사항을 숙지했음에도 외부 접속을 통한 서버 연결 후 발생하는 피해는 책임지지 않습니다.
