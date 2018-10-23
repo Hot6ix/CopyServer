@@ -2,8 +2,8 @@
 
 스마트폰 -> PC 인증번호 전송용 서버
 
-이 프로그램은 별도로 개발된 안드로이드 앱과 함께 사용해야 합니다.
-https://github.com/Hot6ix/CopyClient/tree/master
+이 프로그램은 별도로 개발된 안드로이드 앱과 함께 사용해야 합니다.  
+https://github.com/Hot6ix/CopyClient
 
 - 사용 방법
   - 프로그램 실행 시 시스템 트레이에서 아이콘을 확인할 수 있습니다.
