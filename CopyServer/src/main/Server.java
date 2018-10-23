@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Properties;
 
 import data.Message;
@@ -73,7 +74,7 @@ public class Server extends Thread {
 						
 						@Override
 						public void setOnThreadStart(String ip) {
-							
+							System.out.println("Receiver thread started");
 						}
 						
 						@Override
@@ -87,6 +88,7 @@ public class Server extends Thread {
 								}
 								mConnected = null;
 							}
+							System.out.println("Receiver thread finished");
 						}
 					});
 					mReceiver.start();
@@ -134,11 +136,14 @@ public class Server extends Thread {
 			while(true) {
 				try {
 					if(mConnected != null) {
-						System.out.println(String.format("%s is connected : %b", mConnected.getRemoteSocketAddress().toString(), mConnected.isConnected()));
+						System.out.println(String.format("%s is connected(%d) : %b", mConnected.getRemoteSocketAddress().toString(), mConnected.getSoTimeout(), mConnected.isConnected()));
 						mSender.sendMessage(Message.CONNECTED);
 					}
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SocketException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

@@ -1,11 +1,15 @@
 package utils;
 import java.awt.AWTException;
+import java.awt.HeadlessException;
 import java.awt.MenuItem;
 import java.awt.PopupMenu;
 import java.awt.SystemTray;
 import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.TrayIcon.MessageType;
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 import data.ButtonId;
 
@@ -26,7 +30,18 @@ public class Notificator {
 
 		mIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage("resources/bmo.png"));
 		mIcon.setImageAutoSize(true);
-		
+
+		try {
+			MenuItem ip = new MenuItem(InetAddress.getLocalHost().getHostAddress());
+			mPopup.add(ip);
+			mPopup.addSeparator();
+		} catch (HeadlessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (UnknownHostException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		mUrl = new MenuItem("정보");
 		mUrl.setActionCommand(ButtonId.BTN_INFO.getId());
 		mSetting = new MenuItem("설정 파일 열기");
