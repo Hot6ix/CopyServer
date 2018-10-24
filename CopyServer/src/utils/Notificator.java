@@ -27,7 +27,7 @@ public class Notificator {
 		mTray = SystemTray.getSystemTray();
 		mPopup = new PopupMenu();
 
-		mIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage("resources/bmo.png"));
+		mIcon = new TrayIcon(Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("bmo.png")));
 		mIcon.setImageAutoSize(true);
 
 		try {
