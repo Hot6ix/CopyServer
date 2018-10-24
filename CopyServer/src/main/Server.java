@@ -79,7 +79,6 @@ public class Server extends Thread {
 						public void setOnThreadClosed(String ip) {
 							if(mConnected != null && mConnected.isConnected()) {
 								try {
-									mSender.sendMessage(Message.EOC);
 									mConnected.close();
 								} catch (IOException e) {
 									e.printStackTrace();
