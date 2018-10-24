@@ -1,10 +1,8 @@
 package main;
 import java.awt.TrayIcon;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.util.Properties;
 
 import data.Message;
@@ -129,26 +127,6 @@ public class Server extends Thread {
 		else {
 			System.out.println("Nothing connected.");
 		}
-	}
-	
-	private void printConnection() {
-		new Thread(() -> {
-			while(true) {
-				try {
-					if(mConnected != null) {
-						System.out.println(String.format("%s is connected(%d) : %b", mConnected.getRemoteSocketAddress().toString(), mConnected.getSoTimeout(), mConnected.isConnected()));
-						mSender.sendMessage(Message.CONNECTED);
-					}
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (SocketException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}).start();
 	}
 	
 }
