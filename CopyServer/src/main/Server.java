@@ -26,6 +26,7 @@ public class Server extends Thread {
 	private ReceiverThread mReceiver;
 	
 	public static boolean isPasswordMode = false;
+	private boolean isAlive = false;
 	
 	@Override
 	public void run() {
@@ -57,7 +58,11 @@ public class Server extends Thread {
 					
 					mSender.setmSocket(mConnected);
 					mSender.sendMessage(Message.CONNECTED);
-
+					isAlive = true;
+					
+					checkClient();
+					
+					// Verify password if set
 					String password = mProp.getProperty("password");
 					if(password != null && !password.isEmpty()) {
 						mSender.sendMessage(Message.RQ_PW);
@@ -67,6 +72,7 @@ public class Server extends Thread {
 						mNotifier.printNotification("연결됨", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 					}
 					
+					// Initialize receiver
 					mReceiver = new ReceiverThread(mConnected);
 					mReceiver.setListener(new ThreadListener() {
 						
@@ -83,6 +89,7 @@ public class Server extends Thread {
 								} catch (IOException e) {
 									e.printStackTrace();
 								}
+								isAlive = false;
 								mConnected = null;
 							}
 							System.out.println("Receiver thread finished");
@@ -126,6 +133,23 @@ public class Server extends Thread {
 		else {
 			System.out.println("Nothing connected.");
 		}
+	}
+	
+	private void checkClient() {
+		new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(isAlive) {
+					try {
+						mSender.sendMessage(Message.HEY);
+						sleep(10000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}).start();
 	}
 	
 }

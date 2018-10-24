@@ -64,30 +64,35 @@ public class ReceiverThread extends Thread {
 					}
 				}
 				else {
-					boolean allowCharacter = Boolean.valueOf(prop.getProperty("allowCharacter"));
-					if(allowCharacter) {
-						mClipper.setContents(new StringSelection(msg), null);
-						Notificator.getInstance().printNotification("클립보드에 복사되었습니다.", String.format("인증번호 : %s", msg), MessageType.INFO);
+					if(msg.equals(Message.WHAT.toString())) {
+						// Client is still alive, so reset count
 					}
 					else {
-						Pattern pattern = Pattern.compile("\\d+");
-						Matcher matcher = pattern.matcher(msg);
-						if(matcher.matches()) {
+						boolean allowCharacter = Boolean.valueOf(prop.getProperty("allowCharacter"));
+						if(allowCharacter) {
 							mClipper.setContents(new StringSelection(msg), null);
 							Notificator.getInstance().printNotification("클립보드에 복사되었습니다.", String.format("인증번호 : %s", msg), MessageType.INFO);
 						}
 						else {
-							System.out.println(String.format("Message must not include character : %s", msg));
+							Pattern pattern = Pattern.compile("\\d+");
+							Matcher matcher = pattern.matcher(msg);
+							if(matcher.matches()) {
+								mClipper.setContents(new StringSelection(msg), null);
+								Notificator.getInstance().printNotification("클립보드에 복사되었습니다.", String.format("인증번호 : %s", msg), MessageType.INFO);
+							}
+							else {
+								System.out.println(String.format("Message must not include character : %s", msg));
+							}
 						}
 					}
 				}
 			}
-			
-			mNotifier.printNotification("연결 종료", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (RejecetedException e) {
 			e.printStackTrace();
+		} finally {
+			mNotifier.printNotification("연결 종료", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 		}
 		
 		if(mListener != null) mListener.setOnThreadClosed(mSocket.getRemoteSocketAddress().toString());
