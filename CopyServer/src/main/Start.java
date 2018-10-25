@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Desktop;
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -36,6 +37,7 @@ public class Start {
 		}
 		
 		public void start() {
+			mNotifier.printNotification("CopyServer 실행 중", "시스템 트레이에서 확인할 수 있습니다.", MessageType.INFO);
 			mServer = new Server();
 			mServer.start();
 		}
