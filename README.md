@@ -5,6 +5,9 @@
 이 프로그램은 별도로 개발된 안드로이드 앱과 함께 사용해야 합니다.  
 앱 다운로드 : https://github.com/Hot6ix/CopyClient
 
+CopyServer.exe
+SHA1 : 3da63da0bb0bd2a9d1cd9b742d46472134b042f0
+
 - 주의 사항
   - 첫 실행 시 같은 폴더 내 setting.ini를 생성합니다.
   - 공공에서 제공하는 네트워크 접속 후 사용하는 것을 권장하지 않습니다.
