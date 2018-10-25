@@ -142,8 +142,8 @@ public class Server extends Thread {
 			public void run() {
 				while(isAlive) {
 					try {
-						mSender.sendMessage(Message.HEY);
-						sleep(10000);
+						mSender.sendMessage(Message.EMPTY);
+						sleep(5000);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
