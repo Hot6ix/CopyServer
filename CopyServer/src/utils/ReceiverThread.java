@@ -82,12 +82,13 @@ public class ReceiverThread extends Thread {
 					}
 				}
 			}
+			
+			mNotifier.printNotification("연결 종료", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 		} catch (IOException e) {
+			mNotifier.printNotification("연결 종료", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 			e.printStackTrace();
 		} catch (RejecetedException e) {
 			e.printStackTrace();
-		} finally {
-			mNotifier.printNotification("연결 종료", mSocket.getRemoteSocketAddress().toString(), TrayIcon.MessageType.INFO);
 		}
 		
 		if(mListener != null) mListener.setOnThreadClosed(mSocket.getRemoteSocketAddress().toString());
